@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="utf-8">
+    <title>Catálogo</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#" th:href="@{/}">Mi perfil</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="navbar-nav ml-auto">
+                    <li sec:authorize="isAuthenticated()" class="nav-item">
+                        <a class="nav-link" th:href="@{/logout}">Cerrar sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1>Bienvenido a la Web de Modelos de Motos</h1>
+
+        <div th:each="moto, motoStatus : ${motos}">
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h2 th:text="${moto.marca + ' ' + moto.modelo}"></h2>
+                    <p class="card-text">Marca: <span th:text="${moto.marca}"></span></p>
+                    <p class="card-text">Año: <span th:text="${moto.anyo}"></span></p>
+                    <p class="card-text">Cilindrada: <span th:text="${moto.cilindrada}"></span></p>
+                    <button class="btn btn-primary" th:onclick="'confirmAddToFavorites(this, ' + ${motoStatus.index} + ')'" th:text="'Añadir a favoritos'"></button>
+
+
+
+
+
+                </div>
+            </div>
+            <hr/>
+        </div>
+        
+        <div class="mt-4">
+            <a th:href="@{/formularioMoto}" class="btn btn-success">Añadir moto</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-XF1RKnHJhDkYIblRBXHQuqUA2I82/oT8l1Y7pPjOg9A2K1/bU9Ajr8Q/VJ49X2u" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script>
+    function confirmAddToFavorites(button, index) {
+        if (confirm("¿Deseas añadir a favoritos?")) {
+            addToFavorites(button, index);
+        }
+    }
+
+    function addToFavorites(button, index) {
+        button.disabled = true; // Deshabilita el botón
+        alert("Añadido a favoritos");
+    }
+</script>
+
+</body>
+</html>
